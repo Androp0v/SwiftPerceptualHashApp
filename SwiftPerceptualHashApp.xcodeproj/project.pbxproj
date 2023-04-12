@@ -11,6 +11,9 @@
 		C560E10A29E7587B00CE883C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E10929E7587B00CE883C /* ContentView.swift */; };
 		C560E10C29E7587D00CE883C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C560E10B29E7587D00CE883C /* Assets.xcassets */; };
 		C560E10F29E7587D00CE883C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C560E10E29E7587D00CE883C /* Preview Assets.xcassets */; };
+		C560E11729E7590900CE883C /* ProcessImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11629E7590900CE883C /* ProcessImage.swift */; };
+		C560E11929E7595B00CE883C /* TextureToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11829E7595B00CE883C /* TextureToImage.swift */; };
+		C560E11B29E75B0700CE883C /* Grayscale.metal in Sources */ = {isa = PBXBuildFile; fileRef = C560E11A29E75B0700CE883C /* Grayscale.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,10 @@
 		C560E10929E7587B00CE883C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C560E10B29E7587D00CE883C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C560E10E29E7587D00CE883C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C560E11529E758BC00CE883C /* SwiftPerceptualHashApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftPerceptualHashApp.entitlements; sourceTree = "<group>"; };
+		C560E11629E7590900CE883C /* ProcessImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessImage.swift; sourceTree = "<group>"; };
+		C560E11829E7595B00CE883C /* TextureToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToImage.swift; sourceTree = "<group>"; };
+		C560E11A29E75B0700CE883C /* Grayscale.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Grayscale.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +58,12 @@
 		C560E10629E7587B00CE883C /* SwiftPerceptualHashApp */ = {
 			isa = PBXGroup;
 			children = (
+				C560E11529E758BC00CE883C /* SwiftPerceptualHashApp.entitlements */,
 				C560E10729E7587B00CE883C /* SwiftPerceptualHashAppApp.swift */,
 				C560E10929E7587B00CE883C /* ContentView.swift */,
+				C560E11629E7590900CE883C /* ProcessImage.swift */,
+				C560E11A29E75B0700CE883C /* Grayscale.metal */,
+				C560E11829E7595B00CE883C /* TextureToImage.swift */,
 				C560E10B29E7587D00CE883C /* Assets.xcassets */,
 				C560E10D29E7587D00CE883C /* Preview Content */,
 			);
@@ -137,7 +148,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C560E11729E7590900CE883C /* ProcessImage.swift in Sources */,
+				C560E11B29E75B0700CE883C /* Grayscale.metal in Sources */,
 				C560E10A29E7587B00CE883C /* ContentView.swift in Sources */,
+				C560E11929E7595B00CE883C /* TextureToImage.swift in Sources */,
 				C560E10829E7587B00CE883C /* SwiftPerceptualHashAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,6 +278,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftPerceptualHashApp/SwiftPerceptualHashApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftPerceptualHashApp/Preview Content\"";
@@ -275,6 +290,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -282,6 +298,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raulmonton.SwiftPerceptualHashApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -293,6 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftPerceptualHashApp/SwiftPerceptualHashApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftPerceptualHashApp/Preview Content\"";
@@ -304,6 +324,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,6 +332,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raulmonton.SwiftPerceptualHashApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
