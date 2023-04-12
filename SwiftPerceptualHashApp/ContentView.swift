@@ -22,7 +22,7 @@ struct ContentView: View {
         }
         .padding()
         .task {
-            if let cgImage = try? await processImage() {
+            if let cgImage = try? await PerceptualHash()?.perceptualHash() {
                 self.image = Image(uiImage: UIImage(cgImage: cgImage))
             }
         }

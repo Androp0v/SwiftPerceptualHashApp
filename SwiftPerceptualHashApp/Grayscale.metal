@@ -15,5 +15,5 @@ kernel void grayscale_kernel(texture2d<half, access::read_write> texture [[textu
                              uint2 gid [[thread_position_in_grid]]) {
     half4 inColor = texture.read(gid);
     half gray = dot(inColor.rgb, kRec709Luma);
-    texture.write(half4(gray, gray, gray, 1.0), gid);
+    texture.write(gray, gid);
 }

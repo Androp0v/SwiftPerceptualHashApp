@@ -11,7 +11,7 @@
 		C560E10A29E7587B00CE883C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E10929E7587B00CE883C /* ContentView.swift */; };
 		C560E10C29E7587D00CE883C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C560E10B29E7587D00CE883C /* Assets.xcassets */; };
 		C560E10F29E7587D00CE883C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C560E10E29E7587D00CE883C /* Preview Assets.xcassets */; };
-		C560E11729E7590900CE883C /* ProcessImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11629E7590900CE883C /* ProcessImage.swift */; };
+		C560E11729E7590900CE883C /* PerceptualHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11629E7590900CE883C /* PerceptualHash.swift */; };
 		C560E11929E7595B00CE883C /* TextureToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11829E7595B00CE883C /* TextureToImage.swift */; };
 		C560E11B29E75B0700CE883C /* Grayscale.metal in Sources */ = {isa = PBXBuildFile; fileRef = C560E11A29E75B0700CE883C /* Grayscale.metal */; };
 /* End PBXBuildFile section */
@@ -23,7 +23,7 @@
 		C560E10B29E7587D00CE883C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C560E10E29E7587D00CE883C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C560E11529E758BC00CE883C /* SwiftPerceptualHashApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftPerceptualHashApp.entitlements; sourceTree = "<group>"; };
-		C560E11629E7590900CE883C /* ProcessImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessImage.swift; sourceTree = "<group>"; };
+		C560E11629E7590900CE883C /* PerceptualHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerceptualHash.swift; sourceTree = "<group>"; };
 		C560E11829E7595B00CE883C /* TextureToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToImage.swift; sourceTree = "<group>"; };
 		C560E11A29E75B0700CE883C /* Grayscale.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Grayscale.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,7 +61,7 @@
 				C560E11529E758BC00CE883C /* SwiftPerceptualHashApp.entitlements */,
 				C560E10729E7587B00CE883C /* SwiftPerceptualHashAppApp.swift */,
 				C560E10929E7587B00CE883C /* ContentView.swift */,
-				C560E11629E7590900CE883C /* ProcessImage.swift */,
+				C560E11629E7590900CE883C /* PerceptualHash.swift */,
 				C560E11A29E75B0700CE883C /* Grayscale.metal */,
 				C560E11829E7595B00CE883C /* TextureToImage.swift */,
 				C560E10B29E7587D00CE883C /* Assets.xcassets */,
@@ -148,7 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C560E11729E7590900CE883C /* ProcessImage.swift in Sources */,
+				C560E11729E7590900CE883C /* PerceptualHash.swift in Sources */,
 				C560E11B29E75B0700CE883C /* Grayscale.metal in Sources */,
 				C560E10A29E7587B00CE883C /* ContentView.swift in Sources */,
 				C560E11929E7595B00CE883C /* TextureToImage.swift in Sources */,
