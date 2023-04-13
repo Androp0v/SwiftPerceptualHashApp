@@ -22,13 +22,13 @@ class PerceptualHash {
     
     let texture: MTLTexture
     let resizedTexture: MTLTexture
-    let dctTexture: MTLTexture
+    let grayscaleTexture: MTLTexture
     
     // MARK: - Initialization
     
     init?() {
         // Get the image
-        let image = UIImage(named: "SampleImageFull.png")
+        let image = UIImage(named: "SampleImageFullMod.png")
         
         // Get the image data
         guard let imageData = image?.pngData() else {
@@ -92,19 +92,19 @@ class PerceptualHash {
         }
         self.resizedTexture = resizedTexture
         
-        // Create a 8x8 destination texture to store the Discrete Cosine Transform
-        let dctTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+        // Create a 32x32 grayscale texture
+        let grayscaleTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: .r32Float,
-            width: dctSize,
-            height: dctSize,
+            width: resizedSize,
+            height: resizedSize,
             mipmapped: false
         )
-        dctTextureDescriptor.usage = [.shaderRead, .shaderWrite]
-        guard let dctTexture = device.makeTexture(descriptor: dctTextureDescriptor) else {
-            print("Failed to create \(dctSize)x\(dctSize) DCT texture.")
+        grayscaleTextureDescriptor.usage = [.shaderRead, .shaderWrite]
+        guard let grayscaleTexture = device.makeTexture(descriptor: grayscaleTextureDescriptor) else {
+            print("Failed to create \(resizedSize)x\(resizedSize) destination texture.")
             return nil
         }
-        self.dctTexture = dctTexture
+        self.grayscaleTexture = grayscaleTexture
         
         // Create command queue
         guard let commandQueue = device.makeCommandQueue() else {
@@ -114,9 +114,9 @@ class PerceptualHash {
         self.commandQueue = commandQueue
     }
     
-    // MARK: - Can be reused
+    // MARK: - Texture handling
     
-    func perceptualHash() async throws -> CGImage? {
+    func perceptualHash() async throws -> String? {
             
         // Create command buffer
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
@@ -157,6 +157,9 @@ class PerceptualHash {
         // Set the source texture
         computeEncoder.setTexture(resizedTexture, index: 0)
         
+        // Set the output texture
+        computeEncoder.setTexture(grayscaleTexture, index: 1)
+        
         // Dispatch the threads
         let threadgroupSize = MTLSizeMake(16, 16, 1)
         var threadgroupCount = MTLSize()
@@ -171,14 +174,100 @@ class PerceptualHash {
         
         // MARK: - Finish
         
-        let cgImage = await withCheckedContinuation { continuation in
+        let hash = await withCheckedContinuation { continuation in
             commandBuffer.addCompletedHandler { _ in
-                continuation.resume(returning: self.resizedTexture.getCGImage())
+                let hash = self.computeDCT(grayscaleTexture: self.grayscaleTexture)
+                continuation.resume(returning: hash)
             }
-            
             // Submit work to the GPU
             commandBuffer.commit()
         }
-        return cgImage
+        return hash
+    }
+    
+    // MARK: - Compute DCT
+    
+    private func computeDCT(grayscaleTexture: MTLTexture) -> String {
+        let rowBytes = resizedSize * 4
+        let length = rowBytes * resizedSize
+        let region = MTLRegionMake2D(0, 0, resizedSize, resizedSize)
+        var grayBytes = [Float32](repeating: 0, count: length)
+        var dctArray = [Float](repeating: 0, count: dctSize * dctSize)
+        
+        var hash: String = ""
+        
+        // Fill bgraBytes with the drawable texture data.
+        grayBytes.withUnsafeMutableBytes { r32BytesPointer in
+            guard let baseAddress = r32BytesPointer.baseAddress else {
+                return
+            }
+            // Fill the array with data from the grayscale texture
+            grayscaleTexture.getBytes(
+                baseAddress,
+                bytesPerRow: rowBytes,
+                from: region,
+                mipmapLevel: 0
+            )
+        }
+        // Compute each one of the elements of the discrete cosine transform
+        for u in 0..<dctSize {
+            for v in 0..<dctSize {
+                var pixel_sum: Float = 0
+                for i in 0..<resizedSize {
+                    var pixel_row_sum: Float = 0
+                    // Compute the discrete cosine along the row axis
+                    for j in 0..<resizedSize {
+                        let pixelValue = grayBytes[i * resizedSize + j]
+                        pixel_row_sum += pixelValue
+                            * cos((Float.pi * (2.0 * Float(j) + 1.0) * Float(u)) / (2.0 * Float(resizedSize)))
+                    }
+                    pixel_row_sum *= cos((Float.pi * (2.0 * Float(i) + 1.0) * Float(v)) / (2.0 * Float(resizedSize)))
+                    pixel_sum += pixel_row_sum
+                }
+                if u != 0 {
+                    pixel_sum *= sqrt(2/Float(resizedSize))
+                } else {
+                    pixel_sum += sqrt(1/Float(resizedSize))
+                }
+                if v != 0 {
+                    pixel_sum *= sqrt(2/Float(resizedSize))
+                } else {
+                    pixel_sum += sqrt(1/Float(resizedSize))
+                }
+                dctArray[u * dctSize + v] = pixel_sum
+            }
+        }
+        
+        // Remove zero order value at (0,0), as it throws off the mean
+        dctArray[0] = 0.0
+        
+        // Compute the mean of all the elements in the image
+        var meanDCT: Float = 0.0
+        for u in 0..<dctSize {
+            for v in 0..<dctSize {
+                let dctValue = dctArray[u * dctSize + v]
+                meanDCT += dctValue
+            }
+        }
+        meanDCT /= Float(dctSize * dctSize)
+        
+        // Compute the hash comparing with the mean
+        for i in 0..<(dctSize * dctSize) {
+            if dctArray[i] > Float32(meanDCT) {
+                hash += "1"
+            } else {
+                hash += "0"
+            }
+        }
+        return binToHex(bin: hash)
+    }
+    
+    // MARK: - Hex
+    private func binToHex(bin : String) -> String {
+        // binary to integer:
+        let num = bin.withCString { strtoul($0, nil, 2) }
+        // integer to hex:
+        let hex = String(num, radix: 16, uppercase: true) // (or false)
+        return hex
     }
 }
