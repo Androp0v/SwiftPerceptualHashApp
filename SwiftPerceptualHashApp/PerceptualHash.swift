@@ -117,7 +117,6 @@ class PerceptualHash {
     // MARK: - Texture handling
     
     func perceptualHash() async throws -> String? {
-            
         // Create command buffer
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("Failed to create command buffer!")
@@ -196,7 +195,7 @@ class PerceptualHash {
         
         var hash: String = ""
         
-        // Fill bgraBytes with the drawable texture data.
+        // Fill with the texture data
         grayBytes.withUnsafeMutableBytes { r32BytesPointer in
             guard let baseAddress = r32BytesPointer.baseAddress else {
                 return
@@ -259,15 +258,17 @@ class PerceptualHash {
                 hash += "0"
             }
         }
-        return binToHex(bin: hash)
+        return binaryToHex(hash)
     }
     
     // MARK: - Hex
-    private func binToHex(bin : String) -> String {
-        // binary to integer:
-        let num = bin.withCString { strtoul($0, nil, 2) }
-        // integer to hex:
-        let hex = String(num, radix: 16, uppercase: true) // (or false)
+    
+    private func binaryToHex(_ binary : String) -> String {
+        let number = binary.withCString {
+            // String to Unsigned long
+            strtoul($0, nil, 2)
+        }
+        let hex = String(number, radix: 36, uppercase: false)
         return hex
     }
 }
