@@ -14,6 +14,7 @@
 		C560E11729E7590900CE883C /* PerceptualHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11629E7590900CE883C /* PerceptualHash.swift */; };
 		C560E11929E7595B00CE883C /* TextureToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560E11829E7595B00CE883C /* TextureToImage.swift */; };
 		C560E11B29E75B0700CE883C /* Grayscale.metal in Sources */ = {isa = PBXBuildFile; fileRef = C560E11A29E75B0700CE883C /* Grayscale.metal */; };
+		C5FF313729E86E7C00D1D697 /* SwiftPerceptualHash in Frameworks */ = {isa = PBXBuildFile; productRef = C5FF313629E86E7C00D1D697 /* SwiftPerceptualHash */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C560E11629E7590900CE883C /* PerceptualHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerceptualHash.swift; sourceTree = "<group>"; };
 		C560E11829E7595B00CE883C /* TextureToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToImage.swift; sourceTree = "<group>"; };
 		C560E11A29E75B0700CE883C /* Grayscale.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Grayscale.metal; sourceTree = "<group>"; };
+		C5A79EA529E86DCB00712C03 /* SwiftPerceptualHash */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftPerceptualHash; path = ../SwiftPerceptualHash; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5FF313729E86E7C00D1D697 /* SwiftPerceptualHash in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,8 +45,10 @@
 		C560E0FB29E7587B00CE883C = {
 			isa = PBXGroup;
 			children = (
+				C5A79EA429E86DCB00712C03 /* Packages */,
 				C560E10629E7587B00CE883C /* SwiftPerceptualHashApp */,
 				C560E10529E7587B00CE883C /* Products */,
+				C5FF313529E86E7C00D1D697 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +83,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C5A79EA429E86DCB00712C03 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				C5A79EA529E86DCB00712C03 /* SwiftPerceptualHash */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		C5FF313529E86E7C00D1D697 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -94,6 +114,9 @@
 			dependencies = (
 			);
 			name = SwiftPerceptualHashApp;
+			packageProductDependencies = (
+				C5FF313629E86E7C00D1D697 /* SwiftPerceptualHash */,
+			);
 			productName = SwiftPerceptualHashApp;
 			productReference = C560E10429E7587B00CE883C /* SwiftPerceptualHashApp.app */;
 			productType = "com.apple.product-type.application";
@@ -363,6 +386,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C5FF313629E86E7C00D1D697 /* SwiftPerceptualHash */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftPerceptualHash;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C560E0FC29E7587B00CE883C /* Project object */;
 }

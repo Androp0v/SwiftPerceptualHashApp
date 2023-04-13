@@ -7,6 +7,7 @@
 
 import Metal
 import MetalKit
+import SwiftPerceptualHash
 import SwiftUI
 
 struct ContentView: View {
@@ -22,7 +23,11 @@ struct ContentView: View {
         }
         .padding()
         .task {
-            print(try? await PerceptualHash()?.perceptualHash())
+            let hashManager = try? PerceptualHashManager()
+            guard let imageData = UIImage(named: "SampleImageFull.png")?.pngData() else {
+                return
+            }
+            print(try? await hashManager?.perceptualHash(imageData: imageData)?.hexString)
         }
     }
 }
