@@ -27,7 +27,8 @@ struct ContentView: View {
             guard let imageData = UIImage(named: "SampleImageFull.png")?.pngData() else {
                 return
             }
-            print(try? await hashManager?.perceptualHash(imageData: imageData)?.hexString)
+            let hash = try? await hashManager?.perceptualHash(imageData: imageData)
+            print(hash?.stringValue)
         }
     }
 }
