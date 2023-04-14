@@ -23,7 +23,7 @@ struct ContentView: View {
         }
         .padding()
         .task {
-            let hashManager = try? PerceptualHashManager()
+            let hashManager = try? PerceptualHashGenerator()
             guard let imageData = UIImage(named: "SampleImageFull.png")?.pngData() else {
                 return
             }
