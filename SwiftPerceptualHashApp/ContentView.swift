@@ -13,23 +13,48 @@ import SwiftUI
 struct ContentView: View {
     
     @State var image: Image?
+    @State var hashes = [Hash]()
+    struct Hash {
+        let id = UUID()
+        let text: String
+    }
+    let hashManager = try! PerceptualHashGenerator()
+    let imageData = UIImage(named: "SampleImageFull.png")!.pngData()!
     
     var body: some View {
-        VStack {
-            if let image {
-                image
+        HStack {
+            ScrollView {
+                LazyVStack {
+                    ForEach(hashes, id: \.id) { hash in
+                        Text(hash.text)
+                    }
+                }
             }
-            Text("Hello, world!")
+            Button("Do it!") {
+                Task {
+                    await doThing()
+                }
+            }
         }
         .padding()
-        .task {
-            let hashManager = try? PerceptualHashGenerator()
-            guard let imageData = UIImage(named: "SampleImageFull.png")?.pngData() else {
-                return
+    }
+    
+    func doThing() async {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        await withTaskGroup(of: Void.self) { group in
+            for _ in 0..<1000 {
+                group.addTask {
+                    if let hash = try? await hashManager.perceptualHash(imageData: imageData) {
+                        Task { @MainActor in
+                            hashes.append(Hash(text: hash.stringValue))
+                        }
+                    }
+                }
             }
-            let hash = try? await hashManager?.perceptualHash(imageData: imageData)
-            print(hash?.stringValue)
         }
+        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+        print("Time elapsed: \(timeElapsed) s.")
+        // await doThing()
     }
 }
 
