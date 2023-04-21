@@ -27,7 +27,7 @@ struct ContentView: View {
         appropriateFor: nil,
         create: false
     )
-    let hashManager = try! PerceptualHashGenerator(resizedSize: 64, dctSize: 16)
+    let hashManager = try! PerceptualHashGenerator(resizedSize: 32, dctSize: 8)
     
     var body: some View {
         HStack {
@@ -94,8 +94,11 @@ struct ContentView: View {
                 }
                 group.addTask {
                     if let fileData = try? Data(contentsOf: filename) {
-                        if let hash = try? await hashManager.perceptualHash(imageData: fileData) {
+                        do {
+                            let hash = try await hashManager.perceptualHash(imageData: fileData)
                             await hashActor.createOrAppend(hash: hash.stringValue, filename: filename)
+                        } catch let error {
+                            print(error.localizedDescription)
                         }
                     }
                 }
